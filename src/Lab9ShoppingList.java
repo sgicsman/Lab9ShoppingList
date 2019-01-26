@@ -15,12 +15,14 @@ public class Lab9ShoppingList {
 		Scanner scnr = new Scanner(System.in);
 		
 		populateMenu();
-		printMenu();
+		System.out.println("Welcome to George's Market!\n");
 		
 		boolean continueCmd = true; // take order input from user
 		
 		while (continueCmd) {
 
+			printMenu();
+			
 			System.out.println("What item would you like to order?");
 			String userSelection = scnr.nextLine();
 			
@@ -44,9 +46,48 @@ public class Lab9ShoppingList {
 		} // end of while loop
 		
 		displayOrder(); //display list of items ordered + prices, in columns
-		//display average price of items ordered
+		System.out.println( "The average price per item in your order today was $" + computeAverage() + "\n"); //display average price of items ordered
 		
+		// the following line prints the name of the most expensive item purchased by matching the index of the bill list to the index in the order list
+		System.out.println( "The most expensive item in your order today was " + userOrder.get( indexHighestPrice(userBill) ) + ". \n");
+		
+		// the following line prints the name of the least expensive item purchased by matching the index of the bill list to the index in the order list
+		System.out.println( "The least expensive item in your order today was " + userOrder.get( indexLowestPrice(userBill) ) + ". \n");
+				
 	}
+	
+		private static Integer indexLowestPrice(ArrayList<Double> input) {	//method to find the index of the lowest price in the user's bill list
+			Double num = input.get(0);
+			int index;
+			for (Double item : input) {
+				if (num > item) {
+				num = item;
+			}
+		} return index = input.indexOf(num);
+	}
+
+	
+		private static Integer indexHighestPrice(ArrayList<Double> input) {	//method to find the index of the highest price in the user's bill list
+			Double num = input.get(0);
+			int index;
+			for (Double item : input) {
+				if (num < item) {
+					num = item;
+				}
+			} return index = input.indexOf(num);
+		}
+	
+	
+		private static double computeAverage() {
+			double sumNums = 0;
+			double average;
+		
+			for (int i = 0; i <= userOrder.size() -1; i++) {		
+			sumNums += userBill.get(i);
+		}
+			return average = sumNums / userOrder.size();	
+	}
+	
 	
 	private static void displayOrder() {
 		System.out.println("\nPlease check your order: \n");
@@ -60,6 +101,7 @@ public class Lab9ShoppingList {
 		for (int j = 0; j <= userOrder.size() -1; j++) {
 			System.out.printf( "%-15s %-15s\n", userOrder.get(j), userBill.get(j) );
 		}
+		System.out.println();
 	}
 
 	
@@ -75,7 +117,6 @@ public class Lab9ShoppingList {
 	}
 	
 	private static void printMenu() {
-		System.out.println("Welcome to George's Market!\n");
 		
 		System.out.printf("%-14s %-14s\n", "Item", "Price");
 		
@@ -86,6 +127,7 @@ public class Lab9ShoppingList {
 		for (String name : menu.keySet()) {
 			System.out.printf("%-15s %-15s\n", name, menu.get(name));
 		}
-	}
+		System.out.println();
+	}	
 
 }
